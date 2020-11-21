@@ -1,13 +1,18 @@
 import React from 'react';
-import { Text, View } from "react-native";
+import { Text, View } from 'react-native';
+import { useQuery } from '@apollo/client';
 
-const NoteScreen = props => {
+import Note from '../components/Note';
+import { GET_NOTE } from '../gql/query';
+
+const NoteScreen = (props) => {
   const id = props.navigation.getParam('id');
-  return (
-    <View style={{ padding: 10 }}>
-    <Text>This is a note!</Text>
-  </View>
-  )
-}
+  const { loading, error, data } = useQuery(GET_NOTE, { variables: { id } });
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error, note not found</Text>;
+
+  return <Note note={data.note} />;
+};
 
 export default NoteScreen;
