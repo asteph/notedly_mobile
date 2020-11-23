@@ -31,13 +31,29 @@ const ButtonText = styled.Text`
   font-size: 18px;
 `;
 
+const AuthNote = styled.TouchableOpacity`
+  margin-top: 20px;
+`;
+
+const Link = styled.Text`
+  color: #0077cc;
+  font-weight: bold;
+`;
+
 const UserForm = (props) => {
   // form element state
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [username, setUsername] = useState();
 
   const handleSubmit = () => {
-    // this function is called when form button pressed
+    props.action({
+      variables: {
+        email: email,
+        password: password,
+        username: username,
+      },
+    });
   };
 
   return (
@@ -51,11 +67,37 @@ const UserForm = (props) => {
         autoFocus={true}
         autoCapitalize="none"
       />
+      {props.formType === 'signUp' && (
+        <View>
+          <FormLabel>Username</FormLabel>
+          <StyledInput
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            textContentType="username"
+            autoCapitalize="none"
+          />
+        </View>
+      )}
       <FormLabel>Password</FormLabel>
-      <StyledInput onChangeText={(text) => setPassword(text)} value={password} textContentType="password" secureTextEntry={true}/>
+      <StyledInput
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+        textContentType="password"
+        secureTextEntry={true}
+      />
       <FormButton onPress={handleSubmit}>
         <ButtonText>Submit</ButtonText>
       </FormButton>
+      {props.formType !== 'signUp' && (
+        <AuthNote onPress={() => props.navigation.navigate('SignUp')}>
+          <Text>Need an account? <Link> Sign up.</Link></Text>
+        </AuthNote>
+      )}
+      {props.formType === 'signUp' && (
+        <AuthNote onPress={() => props.navigation.navigate('SignIn')}>
+          <Text>Already have an account? <Link> Sign in.</Link></Text>
+        </AuthNote>
+      )}
     </FormView>
   );
 };

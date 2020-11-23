@@ -5,9 +5,9 @@ import { useMutation } from '@apollo/client';
 
 import UserForm from '../components/UserForm';
 import Loading from '../components/Loading';
-import { SIGNIN_USER } from '../gql/mutation';
+import { SIGNUP_USER } from '../gql/mutation';
 
-const SignIn = (props) => {
+const SignUp = (props) => {
   // store the token with a key value of 'token'
   // after the token is stored navigate to the app's main screen
   const storeToken = (token) => {
@@ -16,27 +16,27 @@ const SignIn = (props) => {
     );
   };
 
-  const [signIn, { loading, error }] = useMutation(SIGNIN_USER, {
+  const [signUp, { loading, error }] = useMutation(SIGNUP_USER, {
     onCompleted: (data) => {
-      storeToken(data.signIn);
+      storeToken(data.SignUp);
     },
   });
 
   if (loading) return <Loading />;
   return (
     <React.Fragment>
-      {error && <Text>Error signing in!</Text>}
+      {error && <Text>Error signing up!</Text>}
       <UserForm 
-        action={signIn}
-        formType="signIn"
+        action={signUp}
+        formType="signUp"
         navigation={props.navigation}
       />
     </React.Fragment>
   );
 };
 
-SignIn.navigationOptions = {
-  title: 'Sign In',
+SignUp.navigationOptions = {
+  title: 'Register',
 };
 
-export default SignIn;
+export default SignUp;

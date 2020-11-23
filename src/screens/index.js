@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import screen components
 import AuthLoading from './authloading';
 import SignIn from './signin';
+import SignUp from './signup';
 import Settings from './settings';
 import Feed from './feed';
 import Favorites from './favorites';
@@ -15,6 +16,7 @@ import NoteScreen from './note';
 
 const AuthStack = createStackNavigator({
   SignIn: SignIn,
+  SignUp: SignUp,
 });
 
 const FeedStack = createStackNavigator({
